@@ -1,0 +1,197 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parking-deployment
+  namespace: default
+  labels:
+    app: parking-deployment
+spec:
+  selector:
+    matchLabels:
+      app: parking-deployment
+  template:
+    metadata:
+      labels:
+        app: parking-deployment
+    spec:
+      containers:
+        - name: parking-service
+          image: mhalo/parking.service:1.0-SNAPSHOT
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://host.docker.internal/postgres?currentSchema=parking&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
+            - name: KAFKA-CONFIG_BOOTSTRAP-SERVERS
+              value: "kafka-cp-kafka-headless:9092"
+            - name: KAFKA-CONFIG_SCHEMA-REGISTRY-URL
+              value: "http://kafka-cp-schema-registry:8081"
+            - name: PARKING-SERVICE_ZONE-SERVICE-LOCATION
+              value: "http://zone-service:8183"
+            - name: PARKING-SERVICE_CUSTOMER-SERVICE-LOCATION
+              value: "http://customer-service:8186"
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "1024Mi"
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: parking-service
+  namespace: default
+  labels:
+    app: parking-service
+spec:
+  selector:
+    app: parking-deployment
+  ports:
+    - name: parking-service-port
+      protocol: TCP
+      port: 8181
+  type: LoadBalancer
+  loadBalancerIP: ""
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-deployment
+  namespace: default
+  labels:
+    app: payment-deployment
+spec:
+  selector:
+    matchLabels:
+      app: payment-deployment
+  template:
+    metadata:
+      labels:
+        app: payment-deployment
+    spec:
+      containers:
+        - name: payment-service
+          image: mhalo/payment.service:1.0-SNAPSHOT
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://host.docker.internal/postgres?currentSchema=payment&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
+            - name: KAFKA-CONFIG_BOOTSTRAP-SERVERS
+              value: "kafka-cp-kafka-headless:9092"
+            - name: KAFKA-CONFIG_SCHEMA-REGISTRY-URL
+              value: "http://kafka-cp-schema-registry:8081"
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "1024Mi"
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+  namespace: default
+  labels:
+    app: payment-service
+spec:
+  selector:
+    app: payment-deployment
+  ports:
+    - name: payment-service-port
+      protocol: TCP
+      port: 8182
+  type: LoadBalancer
+  loadBalancerIP: ""
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zone-deployment
+  namespace: default
+  labels:
+    app: zone-deployment
+spec:
+  selector:
+    matchLabels:
+      app: zone-deployment
+  template:
+    metadata:
+      labels:
+        app: zone-deployment
+    spec:
+      containers:
+        - name: zone-service
+          image: mhalo/zone.service:1.0-SNAPSHOT
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "1024Mi"
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zone-service
+  namespace: default
+  labels:
+    app: zone-service
+spec:
+  selector:
+    app: zone-deployment
+  ports:
+    - name: zone-service-port
+      protocol: TCP
+      port: 8183
+  type: LoadBalancer
+  loadBalancerIP: ""
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-deployment
+  namespace: default
+  labels:
+    app: customer-deployment
+spec:
+  selector:
+    matchLabels:
+      app: customer-deployment
+  template:
+    metadata:
+      labels:
+        app: customer-deployment
+    spec:
+      containers:
+        - name: customer-service
+          image: mhalo/customer.service:1.0-SNAPSHOT
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "1024Mi"
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-service
+  namespace: default
+  labels:
+    app: customer-service
+spec:
+  selector:
+    app: customer-deployment
+  ports:
+    - name: customer-service-port
+      protocol: TCP
+      port: 8186
+  type: LoadBalancer
+  loadBalancerIP: ""
