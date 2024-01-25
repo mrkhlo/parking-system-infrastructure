@@ -6,12 +6,16 @@ Run the app (https://github.com/mrkhlo/parking-system-app) on local k8s cluster.
 - Docker
 - Kubernetes (e.g., Docker Desktop, Minikube)
 - Helm
-
-**Setup steps:**
-1. **Generate the microservice docker images from the main app**
-     ```bash
+- App microservice docker images are generated from the main app
+    ```bash
     git clone https://github.com/mrkhlo/parking-system-app
     mvn clean install
+    ```  
+
+**Setup steps:**
+1. **Clone the repo**
+     ```bash
+    git clone https://github.com/mrkhlo/parking-system-infrastructure
     ```    
 
 2. **Deploy the local Kafka cluster with Zookeeper and Schema Registry:**
