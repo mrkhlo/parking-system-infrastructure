@@ -2,14 +2,19 @@
 Run the app (https://github.com/mrkhlo/parking-system-app) on local k8s cluster.
 
 **Prerequisites:**
-
+- Maven
 - Docker
 - Kubernetes (e.g., Docker Desktop, Minikube)
 - Helm
 
 **Setup steps:**
+1. **Generate the microservice docker images from the main app**
+     ```bash
+    git clone https://github.com/mrkhlo/parking-system-app
+    mvn clean install
+    ```    
 
-1. **Deploy the local Kafka cluster with Zookeeper and Schema Registry:**
+2. **Deploy the local Kafka cluster with Zookeeper and Schema Registry:**
 
     ```bash
     helm install kafka helm/cp-helm-charts --version 0.6.0
@@ -17,7 +22,7 @@ Run the app (https://github.com/mrkhlo/parking-system-app) on local k8s cluster.
 
     Wait for all the pods to start successfully.
 
-2. **Deploy Kafka Client Pod:**
+3. **Deploy Kafka Client Pod:**
 
     ```bash
     kubectl apply -f kafka-client.yml
@@ -25,7 +30,7 @@ Run the app (https://github.com/mrkhlo/parking-system-app) on local k8s cluster.
 
     Wait for the pod to start successfully.
 
-3. **Enter Kafka Client Pod and Initialize Topics:**
+4. **Enter Kafka Client Pod and Initialize Topics:**
 
     ```bash
     kubectl cp ./create-ps-topics.sh default/kafka-client:/home/appuser
@@ -33,13 +38,13 @@ Run the app (https://github.com/mrkhlo/parking-system-app) on local k8s cluster.
     sh create-ps-topics.sh kafka-cp-zookeeper-headless
     ```
 
-4. **Deploy Postgres Database:**
+5. **Deploy Postgres Database:**
 
     ```bash
     kubectl apply -f postgres-deployment.yml
     ```
 
-5. **Deploy Parking System Application:**
+6. **Deploy Parking System Application:**
 
     ```bash
     kubectl apply -f application-deployment-local.yml
