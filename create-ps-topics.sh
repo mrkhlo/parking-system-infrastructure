@@ -16,3 +16,4 @@ echo -e 'Successfully created the following topics:'
 kafka-topics --zookeeper $1:2181 --list
 
 # local-confluent-kafka-cp-zookeeper-headless
+
