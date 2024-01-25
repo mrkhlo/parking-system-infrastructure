@@ -23,7 +23,6 @@ Run the app (https://github.com/mrkhlo/parking-system-app) on local k8s cluster.
     ```bash
     helm install kafka helm/cp-helm-charts --version 0.6.0
     ```
-
     Wait for all the pods to start successfully.
 
 3. **Deploy Kafka Client Pod:**
@@ -31,14 +30,18 @@ Run the app (https://github.com/mrkhlo/parking-system-app) on local k8s cluster.
     ```bash
     kubectl apply -f kafka-client.yml
     ```
-
     Wait for the pod to start successfully.
 
 4. **Enter Kafka Client Pod and Initialize Topics:**
 
     ```bash
     kubectl cp ./create-ps-topics.sh default/kafka-client:/home/appuser
-    kubectl exec -it kafka-client /bin/bash
+    ```
+    ```bash
+    kubectl exec -it kafka-client -- /bin/bash
+    ```
+    Execute from within the pod: 
+    ```bash
     sh create-ps-topics.sh kafka-cp-zookeeper-headless
     ```
 
