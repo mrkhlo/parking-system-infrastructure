@@ -3,6 +3,7 @@ Run the app (https://github.com/mrkhlo/parking-system-app) on local k8s cluster.
 
 **Prerequisites:**
 - Maven
+- Java 17
 - Docker
 - Kubernetes (e.g., Docker Desktop, Minikube)
 - Helm
