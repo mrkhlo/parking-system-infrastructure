@@ -9,6 +9,8 @@ Run the app (https://github.com/mrkhlo/parking-system-app) on local k8s cluster.
 - App microservice docker images are generated from the main app
     ```bash
     git clone https://github.com/mrkhlo/parking-system-app
+    ```
+    ```bash
     mvn clean install
     ```  
 
@@ -23,14 +25,14 @@ Run the app (https://github.com/mrkhlo/parking-system-app) on local k8s cluster.
     ```bash
     helm install kafka helm/cp-helm-charts --version 0.6.0
     ```
-    Wait for all the pods to start successfully.
+    Wait for all the pods to start properly.
 
 3. **Deploy Kafka Client Pod:**
 
     ```bash
     kubectl apply -f kafka-client.yml
     ```
-    Wait for the pod to start successfully.
+    Wait for the pod to start properly.
 
 4. **Enter Kafka Client Pod and Initialize Topics:**
 
