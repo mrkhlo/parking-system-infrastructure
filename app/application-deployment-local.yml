@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: parking-deployment
-  namespace: parking-sys
+  namespace: default
   labels:
     app: parking-deployment
 spec:
@@ -41,6 +41,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: parking-service
+  namespace: default
   labels:
     app: parking-service
 spec:
@@ -58,7 +59,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: payment-deployment
-  namespace: parking-sys
+  namespace: default
   labels:
     app: payment-deployment
 spec:
@@ -92,7 +93,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: payment-service
-  namespace: parking-sys
+  namespace: default
   labels:
     app: payment-service
 spec:
@@ -110,7 +111,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: zone-deployment
-  namespace: parking-sys
+  namespace: default
   labels:
     app: zone-deployment
 spec:
@@ -137,7 +138,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: zone-service
-  namespace: parking-sys
+  namespace: default
   labels:
     app: zone-service
 spec:
@@ -155,7 +156,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: customer-deployment
-  namespace: parking-sys
+  namespace: default
   labels:
     app: customer-deployment
 spec:
@@ -182,7 +183,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: customer-service
-  namespace: parking-sys
+  namespace: default
   labels:
     app: customer-service
 spec:
