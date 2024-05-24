@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: parking-sys-1
+  name: parking-sys-non-default-namespace
   namespace: argocd
 spec:
   project: default
@@ -23,7 +23,7 @@ spec:
       targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: parking-sys
 
   syncPolicy:
     syncOptions:

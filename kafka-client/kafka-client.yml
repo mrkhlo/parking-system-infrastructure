@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: kafka-client
-  namespace: default
+  namespace: parking-sys
 spec:
   containers:
     - name: kafka-client
