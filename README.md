@@ -38,14 +38,14 @@ Run the app (https://github.com/mrkhlo/parking-system-app) on local k8s cluster.
 4. **Enter Kafka Client Pod and Initialize Topics:**
 
     ```bash
-    kubectl cp ./create-ps-topics.sh default/kafka-client:/home/appuser
+    kubectl cp ./delete-and-create-ps-topics.sh default/kafka-client:/home/appuser
     ```
     ```bash
     kubectl exec -it kafka-client -- /bin/bash
     ```
     Execute from within the pod: 
     ```bash
-    sh create-ps-topics.sh kafka-cp-zookeeper-headless
+    sh delete-and-create-ps-topics.sh kafka-cp-zookeeper-headless
     ```
 
 5. **Deploy Postgres Database:**
